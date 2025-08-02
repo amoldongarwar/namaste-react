@@ -1,31 +1,48 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client'
-// const heading = React.createElement(   // Creating React element (Object)
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+// React.createElement = object = HTMLElement(render)
+// const heading = React.createElement(
 //   "h1",
-//   { id: "heading", xyz:'abc' },
-//   "Hello world from React!"
+//   { id: "heading" },
+//   "Namaste React🚀"
 // );
+// console.log(heading); // object
 
-/*
-<div id="parent">
-  <div id="child">
-    <h1>I'm h1 tag</h1>
-    <h2>I'm h2 tag</h2>
+// JSX is not html inside javascript
+// JSX - is html like or XML like syntax in Javascript
+// JSX (transpiled before it reaches the JS) - PARCEL - Babel
+// JSX => Babel transpiles it to React.createElement => ReactElement-JS Object => HTMLElement(render)
+// Babel is a JavaScript compiler that converts modern JS
+// (ES6+, JSX, TypeScript) into older JS (ES5) for browser compatibility.
+// Used with bundlers (Parcel, Webpack, Vite) to make code production-ready.
+
+// React Element
+const jsxHeading = (
+  <h1 id="heading" className="head" tabIndex="1`">
+    Namaste React using JSX 🚀
+  </h1>
+); // single line
+const jsxHeading1 = (
+  <h1 id="heading" className="head" tabIndex="1">
+    Namaste React 🚀
+  </h1>
+); // Multi-line: Wrap in parentheses for readability
+
+// React Functional Component
+// without return keyword
+const HeadingComponent = () => <h1>Namaste React using functional Component 🚀</h1>
+const HeadingComponent1 = () => (
+  <div id="container">
+    <h1 className="heading">Namaste React using functional Component 🚀</h1>
   </div>
-</div>
-ReactElement(Object) ⇒ HTML (Browser Understands)
-*/
+)
+// return keyword
+const HeadingComponent2 = () => {
+  return <h1>Namaste React using functional Component 🚀</h1>;
+};
 
-const parent = React.createElement(
-  "div",
-  { id: "parent" },
-  React.createElement("div", { id: "child" }, [
-    React.createElement("h1", {}, `I'm an h1 tag`),
-    React.createElement("h2", {}, `I'm an h2 tag`),
-  ])
-);
-// console.log("heading", heading);
-console.log(parent, parent);
+console.log(jsxHeading); // object
 const root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(heading); // Passing React Element
-root.render(parent);
+// root.render(jsxHeading); // replacing
+root.render(<HeadingComponent1/>);
