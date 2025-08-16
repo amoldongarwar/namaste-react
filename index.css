@@ -50,6 +50,7 @@
   width: 100%;
 }
 
-.search {
-  padding: 16px;
+.filter-btn {
+  margin: 10px;
+  cursor: pointer;
 }
