@@ -9,8 +9,10 @@ export default function RestaurantCard(props) {
     avgRating,
     cuisines,
     costForTwo,
-    deliveryTime,
-  } = resData?.data;
+    sla
+    // deliveryTime  static data
+  } = resData?.info;
+  // resData?.data;    static data
 
   return (
     <div className="restaurent-card" style={{ backgroundColor: "#f0f0f0" }}>
@@ -26,8 +28,9 @@ export default function RestaurantCard(props) {
       <h3>{name}</h3>
       <h4>{cuisines.join(", ")}</h4>
       <h3>{avgRating}</h3>
-      <h4>₹{costForTwo / 100} for two</h4>
-      <h4>{deliveryTime} minutes</h4>
+      {/* <h4>₹{costForTwo / 100} for two</h4> */}
+      <h4>{costForTwo}</h4>
+      <h4>{sla?.deliveryTime} minutes</h4>
     </div>
   );
-};
+}
