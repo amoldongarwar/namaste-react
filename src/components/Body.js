@@ -1,6 +1,7 @@
 import RestaurantCard from "./RestaurentCard";
 import resList from "../utils/mockData";
 import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer";
 
 export default function Body() {
   // const [listOfRestaurents, setListOfRestaurents] = useState(resList); static data
@@ -23,6 +24,15 @@ export default function Body() {
     fetchData();
   }, []);
 
+  // for shimmer
+  //   useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     fetchData();
+  //   }, 5000); // 5000ms = 5 seconds
+  //   Cleanup in case component unmounts before 5s
+  //   return () => clearTimeout(timer);
+  // }, []);
+
   const fetchData = async () => {
     const data = await fetch(
       "https://swiggy-api-4c740.web.app/swiggy-api.json"
@@ -38,7 +48,8 @@ export default function Body() {
   // Loading to make better user experience
 
   if (listOfRestaurents.length === 0) {
-    return <h1>Loading...</h1>;
+    // return <h1>Loading...</h1>;
+    return <Shimmer />;  // use Shimmer UI
   }
 
   return (
