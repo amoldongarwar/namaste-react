@@ -7,6 +7,13 @@ export default function Body() {
   // const [listOfRestaurents, setListOfRestaurents] = useState(resList); static data
   const [listOfRestaurents, setListOfRestaurents] = useState([]);
 
+  const [searchText, setSearchText] = useState("");
+
+  const [filteredRestaurents, setFilteredRestaurents] = useState([]);
+
+  // wherener state variables update, react triggers a reconciliation cycle(re-render the component) e.g onchange fires
+  console.log("body render");
+
   const topRatedRestaurentsList = () => {
     // let topRatedRestaurents = resList.filter((res) => res.data.avgRating > 4); for static data
     let topRatedRestaurents = listOfRestaurents.filter(
@@ -14,8 +21,11 @@ export default function Body() {
     );
 
     console.log(topRatedRestaurents);
-    setListOfRestaurents(topRatedRestaurents);
+    // setListOfRestaurents(topRatedRestaurents); don't use this now
+    setFilteredRestaurents(topRatedRestaurents);
   };
+
+  // Search Logic
 
   // Using API but it's not working for image(used static img), swiggy api changing continuously
   // I'm using custom swiggy api
@@ -38,23 +48,45 @@ export default function Body() {
       "https://swiggy-api-4c740.web.app/swiggy-api.json"
     );
     const json = await data.json();
-    console.log(json);
+    console.log(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
     // Optional Chaining ensures no crash if something is undefined
     setListOfRestaurents(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+
+    // initial when render
+    setFilteredRestaurents(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   };
 
-  // Loading to make better user experience
+  // Loading to make better user experience like Shimmer
+  // Conditional rendering
 
-  if (listOfRestaurents.length === 0) {
-    // return <h1>Loading...</h1>;
-    return <Shimmer />;  // use Shimmer UI
-  }
-
-  return (
+  return listOfRestaurents.length == 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            id="search-text"
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+          ></input>
+          <button
+            onClick={() => {
+              const filterRestaurents = listOfRestaurents.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+              setFilteredRestaurents(filterRestaurents);
+            }}
+          >
+            Search
+          </button>
+        </div>
         <button className="filter-btn" onClick={topRatedRestaurentsList}>
           Top Rated Restaurant
         </button>
@@ -63,7 +95,7 @@ export default function Body() {
         {/* <RestaurantCard resData={resList[0]} />
         <RestaurantCard resData={resList[1]} /> */}
 
-        {listOfRestaurents.map((restaurant) => (
+        {filteredRestaurents.map((restaurant) => (
           // <RestaurantCard resData={restaurant} key={restaurant?.data?.id} /> for satic data
 
           <RestaurantCard resData={restaurant} key={restaurant?.info?.id} />
