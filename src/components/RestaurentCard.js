@@ -1,5 +1,5 @@
 export default function RestaurantCard(props) {
-  console.log("props", props);
+  // console.log("props", props);
 
   const { resData } = props;
 
