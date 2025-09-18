@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { LOGO_URL } from "../utils/constant";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   console.log("Header render"); // check is it re-render when state update e.g login/logout button
@@ -8,7 +9,7 @@ export default function Header() {
 
   useEffect(() => {
     console.log("useEffect Called");
-  },[btnName]);
+  }, [btnName]);
 
   // Other Method
   // function handleButton() {
@@ -23,10 +24,18 @@ export default function Header() {
       </div>
       <div className="nav-items">
         <ul>
-          <li>Home</li>
-          <li>About Us</li>
-          <li>Contact Us</li>
-          <li>Cart</li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About Us</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact Us</Link>
+          </li>
+          <li>
+            <Link to="/cart">Cart</Link>
+          </li>
           {/* <button className="login" onClick={handleButton}>
             {btnName}
           </button> */}
