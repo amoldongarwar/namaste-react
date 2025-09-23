@@ -3,9 +3,18 @@ const User = ({ name }) => {
   const [count, setCount] = useState(0);
   const [count2] = useState(1);
 
+  // useEffect(() => {
+  //   // Api Calls
+  // }, []);
+
   useEffect(() => {
-    // Api Calls
-  }, []);
+    const timer = setInterval(() => console.log("tick"), 1000);
+
+    return () => {
+      // cleanup like componentWillUnmount
+      clearInterval(timer);
+    };
+  }, []); // empty array = run only once (like componentDidMount)
 
   return (
     <div className="user-card">
