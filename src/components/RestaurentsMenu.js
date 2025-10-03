@@ -2,23 +2,29 @@ import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import { MENU_API_URL } from "../utils/constant";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 export default function RestaurentsMenu() {
-  const [resInfo, setResInfo] = useState(null); // Initially we kept null might be we will get some undefined errors for destrcting while loading so we can kept shimmer top
+  // const [resInfo, setResInfo] = useState(null); // Initially we kept null might be we will get some undefined errors for destrcting while loading so we can kept shimmer top
+  // moved to custom hooks
 
   const { resId } = useParams();
 
-  useEffect(() => {
-    fetchMenu();
-  }, []);
+  const resInfo = useRestaurantMenu(resId);
 
-  const fetchMenu = async () => {
-    const data = await fetch(MENU_API_URL + resId);
+  // moved to custom hooks
 
-    const json = await data.json();
-    console.log("json", json);
-    setResInfo(json.data);
-  };
+  // useEffect(() => {
+  //   fetchMenu();
+  // }, []);
+
+  // const fetchMenu = async () => {
+  //   const data = await fetch(MENU_API_URL + resId);
+
+  //   const json = await data.json();
+  //   console.log("json", json);
+  //   setResInfo(json.data);
+  // };
 
   if (resInfo === null) return <Shimmer />; // kept top to fixed undefine errors
 

@@ -3,6 +3,7 @@ import resList from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 export default function Body() {
   // const [listOfRestaurents, setListOfRestaurents] = useState(resList); static data
@@ -58,11 +59,22 @@ export default function Body() {
     );
 
     // initial when render
-    setFilteredRestaurents(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setFilteredRestaurents(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
   };
 
   // Loading to make better user experience like Shimmer
   // Conditional rendering
+
+  // check online status
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false)
+    return (
+      <h1>
+        Looks like you are offline!! Please check your internet connection
+      </h1>
+    );
 
   return listOfRestaurents.length == 0 ? (
     <Shimmer />
@@ -99,7 +111,12 @@ export default function Body() {
         {filteredRestaurents.map((restaurant) => (
           // <RestaurantCard resData={restaurant} key={restaurant?.data?.id} /> for satic data
 
-          <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}><RestaurantCard resData={restaurant} key={restaurant?.info?.id} /></Link>
+          <Link
+            key={restaurant.info.id}
+            to={"/restaurants/" + restaurant.info.id}
+          >
+            <RestaurantCard resData={restaurant} key={restaurant?.info?.id} />
+          </Link>
         ))}
       </div>
     </div>
