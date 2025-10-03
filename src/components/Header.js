@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { LOGO_URL } from "../utils/constant";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 export default function Header() {
   console.log("Header render"); // check is it re-render when state update e.g login/logout button
@@ -17,6 +18,9 @@ export default function Header() {
   //   setButton(isButton);
   // }
 
+  // utility function
+  const onlineStatus = useOnlineStatus();
+
   return (
     <div className="header">
       <div className="logo-container">
@@ -25,6 +29,9 @@ export default function Header() {
       <div className="nav-items">
         <ul>
           <li>
+              Online Status: {onlineStatus ? "✅" : "🔴"}
+          </li>
+          <li>
             <Link to="/">Home</Link>
           </li>
           <li>
@@ -32,6 +39,9 @@ export default function Header() {
           </li>
           <li>
             <Link to="/contact">Contact Us</Link>
+          </li>
+          <li>
+            <Link to="/Grocery">Grocery</Link>
           </li>
           <li>
             <Link to="/cart">Cart</Link>
