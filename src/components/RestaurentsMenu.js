@@ -3,6 +3,7 @@ import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import { MENU_API_URL } from "../utils/constant";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurentCategory from "./RestaurentCategory";
 
 export default function RestaurentsMenu() {
   // const [resInfo, setResInfo] = useState(null); // Initially we kept null might be we will get some undefined errors for destrcting while loading so we can kept shimmer top
@@ -36,20 +37,31 @@ export default function RestaurentsMenu() {
 
   console.log(itemCards);
 
+  console.log(
+    "itemCardsList",
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+  );
+
+  const categories =
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (c) =>
+        c?.card?.card?.["@type"] ===
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+  console.log("categories", categories);
+
   return (
-    <div className="menu">
-      <h1>{name}</h1>
-      <p>
+    <div className="text-center">
+      <h1 className="font-bold my-6 text-2xl">{name}</h1>
+      <p className="font-bold text-lg">
         {cuisines?.join(", ")} - {costForTwoMessage}
       </p>
-      <h2>Menu</h2>
-      <ul>
-        {itemCards.map((item) => (
-          <li key={item?.card?.info?.id}>
-            {item?.card?.info?.name} - Rs.{item?.card?.info?.price / 100}
-          </li>
-        ))}
-      </ul>
+
+      {/* categories  accordion */}
+
+      {categories.map((category) => (
+        <RestaurentCategory data={category?.card?.card} key={category?.card?.card?.categoryId}/>
+      ))}
     </div>
   );
 }

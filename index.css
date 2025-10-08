@@ -1,4 +1,4 @@
-.header {
+/* .header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -20,7 +20,7 @@
 }
 
 .restaurent-card {
-  /* height: 360px;  automatically takes */
+  height: 360px;  automatically takes
   width: 200px;
   padding: 8px;
   margin: 8px;
@@ -29,7 +29,7 @@
 .restaurent-container {
   display: flex;
   flex-wrap: wrap;
-  /*justify-content: start; check */
+  justify-content: start; check
 }
 
 .restaurent-list > ul {
@@ -77,4 +77,8 @@
   padding: 10px;
   border: 1px solid black;
 }
+ */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

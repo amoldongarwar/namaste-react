@@ -15,9 +15,10 @@ export default function RestaurantCard(props) {
   // resData?.data;    static data
 
   return (
-    <div className="restaurent-card" style={{ backgroundColor: "#f0f0f0" }}>
+    <div className="m-4 p-4 w-[250px] bg-yellow-100 rounded-lg hover:bg-purple-600">
+      {/* specific size [250px] */}
       <img
-        className="restaurent-logo"
+        className="rounded-lg"
         alt="restaurent-logo"
         src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/FOOD_CATALOG/IMAGES/CMS/2025/6/6/f6c81999-57b6-4eb7-ac66-dc1c3485f2e4_6ba607a5-1751-462a-a73d-68ae91ade469.jpg"
         // src={
@@ -25,7 +26,7 @@ export default function RestaurantCard(props) {
         //   resData.data.cloudinaryImageId
         // }
       ></img>
-      <h3>{name}</h3>
+      <h3 className="font-bold py-4 text-lg">{name}</h3>
       <h4>{cuisines.join(", ")}</h4>
       <h3>{avgRating}</h3>
       {/* <h4>₹{costForTwo / 100} for two</h4> */}
@@ -33,4 +34,20 @@ export default function RestaurantCard(props) {
       <h4>{sla?.deliveryTime} minutes</h4>
     </div>
   );
+}
+
+
+// Higher Order Component
+
+// Input - RestaurantCard => RestaurantCardPromoted
+
+export const withPromotedLabel = (RestaurantCard) => {
+  return(props) => {
+    return(
+      <div>
+        <label className="absolute bg-green-500 text-white m-2 p-2 rounded-lg">Promoted</label>
+        <RestaurantCard {...props}/>
+      </div>
+    )
+  }
 }

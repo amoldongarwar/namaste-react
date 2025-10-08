@@ -22,28 +22,28 @@ export default function Header() {
   const onlineStatus = useOnlineStatus();
 
   return (
-    <div className="header">
+    <div className="flex justify-between bg-yellow-400 shadow-lg sm:bg-slate-400 lg:bg-pink-100">
       <div className="logo-container">
-        <img className="logo" src={LOGO_URL}></img>
+        <img className="w-56" src={LOGO_URL}></img>
       </div>
-      <div className="nav-items">
-        <ul>
-          <li>
+      <div className="flex items-center">
+        <ul className="flex p-4 m-4">
+          <li className="px-4">
               Online Status: {onlineStatus ? "✅" : "🔴"}
           </li>
-          <li>
+          <li className="px-4">
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li className="px-4">
             <Link to="/about">About Us</Link>
           </li>
-          <li>
+          <li className="px-4">
             <Link to="/contact">Contact Us</Link>
           </li>
-          <li>
+          <li className="px-4">
             <Link to="/Grocery">Grocery</Link>
           </li>
-          <li>
+          <li className="px-4">
             <Link to="/cart">Cart</Link>
           </li>
           {/* <button className="login" onClick={handleButton}>

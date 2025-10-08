@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurentCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurentCard";
 import resList from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
@@ -12,6 +12,9 @@ export default function Body() {
   const [searchText, setSearchText] = useState("");
 
   const [filteredRestaurents, setFilteredRestaurents] = useState([]);
+
+  // Higher Order Component
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   // wherener state variables update, react triggers a reconciliation cycle(re-render the component) e.g onchange fires
   console.log("body render");
@@ -81,16 +84,20 @@ export default function Body() {
   ) : (
     <div className="body">
       <div className="filter">
-        <div className="search">
+        <div className="search m-4 p-4">
           <input
             id="search-text"
             type="text"
-            className="search-box"
+            className=" border border-solid border-black"
             value={searchText}
             onChange={(event) => setSearchText(event.target.value)}
           ></input>
           <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
+              // Filter restaurent cards and update UI
+              // SearchText
+
               const filterRestaurents = listOfRestaurents.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
@@ -99,23 +106,32 @@ export default function Body() {
           >
             Search
           </button>
+
+          <button
+            className="px-4 py-2 bg-teal-400 rounded-lg"
+            onClick={topRatedRestaurentsList}
+          >
+            Top Rated Restaurant
+          </button>
         </div>
-        <button className="filter-btn" onClick={topRatedRestaurentsList}>
-          Top Rated Restaurant
-        </button>
       </div>
-      <div className="restaurent-container">
+      <div className="flex flex-wrap">
         {/* <RestaurantCard resData={resList[0]} />
         <RestaurantCard resData={resList[1]} /> */}
 
         {filteredRestaurents.map((restaurant) => (
           // <RestaurantCard resData={restaurant} key={restaurant?.data?.id} /> for satic data
-
           <Link
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
           >
-            <RestaurantCard resData={restaurant} key={restaurant?.info?.id} />
+            {console.log("restaurant", restaurant)}
+            {/* If restaurant is promoted then add promoted label to it we don't have promoted params in api so keep based on rating */}
+            {restaurant.info.avgRating === 4.3 ? (
+              <RestaurantCardPromoted resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))}
       </div>
