@@ -62,3 +62,6 @@ import {Component} from "path";
 #  2 types Routing in web apps
  - Client Side Routing
  - Server Side Routing
+
+
+ - 11 half hr remaining
