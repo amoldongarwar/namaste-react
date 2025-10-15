@@ -25,6 +25,11 @@ export default function ItemList({ items }) {
           </div>
 
           <div className="w-3/12 p-4">
+            <div className="absolute">
+              <button className="p-1 mx-auto rounded-lg bg-white shadow-lg m-auto">
+                Add +
+              </button>
+            </div>
             <img
               className="rounded-lg"
               alt="restaurent-logo"

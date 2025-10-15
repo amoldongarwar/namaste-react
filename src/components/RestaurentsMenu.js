@@ -9,6 +9,8 @@ export default function RestaurentsMenu() {
   // const [resInfo, setResInfo] = useState(null); // Initially we kept null might be we will get some undefined errors for destrcting while loading so we can kept shimmer top
   // moved to custom hooks
 
+  const [showIndex, setShowIndex] = useState(null);
+
   const { resId } = useParams();
 
   const resInfo = useRestaurantMenu(resId);
@@ -59,8 +61,13 @@ export default function RestaurentsMenu() {
 
       {/* categories  accordion */}
 
-      {categories.map((category) => (
-        <RestaurentCategory data={category?.card?.card} key={category?.card?.card?.categoryId}/>
+      {categories.map((category, index) => (
+        // Controlled component parent is controlling
+        <RestaurentCategory data={category?.card?.card} key={category?.card?.card?.categoryId}
+         showItems = {index===showIndex && true}  
+        // {/* similar to showItms = {index===1 ? true : false} */}
+        setShowIndex={()=>setShowIndex(index)}
+        />
       ))}
     </div>
   );
