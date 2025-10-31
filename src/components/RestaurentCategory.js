@@ -1,33 +1,45 @@
-import { useState } from "react";
-import ItemList from "./ItemList";
-
 export default function RestaurentCategory({ data, showItems, setShowIndex }) {
-  console.log("data", data);
-
-  // const [showItems, setShowItems] = useState(false);  Lifting up state to expand contract particular accordion
-  
-  const handleClick = () => {
-    // setShowItems(!showItems);
-    setShowIndex(); // ✅ just call it (index comes from parent)
-  }
+  const { title, items } = data;
 
   return (
-    <div>
-      {/* Header */}
-
-      <div className="w-6/12 mx-auto my-4 bg-gray-400 shadow-lg p-4">
-        <div onClick={handleClick} className="flex cursor-pointer justify-between">
-          <span className="font-bold text-lg">
-            {data.title} ({data.itemCards.length})
-          </span>
-          <span>⬇️</span>
-        </div>
-
-        {/* Show and hide when we clicked */}
-        {showItems && <ItemList items={data.itemCards} />}
+    <div className="w-6/12 mx-auto bg-white shadow-lg rounded-xl p-4 text-left">
+      <div
+        className="flex justify-between items-center cursor-pointer"
+        onClick={setShowIndex}
+      >
+        <h2 className="font-bold text-lg">{title}</h2>
+        <span className="text-xl">{showItems ? "⬆️" : "⬇️"}</span>
       </div>
 
-      {/* Accordion Body */}
+      {showItems && (
+        <div className="mt-4 space-y-3">
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-between items-start border-b pb-2"
+            >
+              <div className="w-9/12">
+                <h3 className="font-semibold text-gray-800">{item.name}</h3>
+                <p className="text-sm text-gray-500">{item.description}</p>
+                <p className="mt-1 text-gray-700 font-medium">
+                  ₹{item.price / 100}
+                </p>
+                <p className="text-sm text-green-600">
+                  ⭐ {item.rating} ({item.ratingCount})
+                </p>
+              </div>
+
+              {item.imageId && (
+                <img
+                  src={`https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_100,h_100,c_fill/${item.imageId}`}
+                  alt={item.name}
+                  className="rounded-lg w-24 h-24 object-cover"
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
