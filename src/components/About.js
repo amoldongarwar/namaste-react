@@ -1,8 +1,8 @@
+import UserContext from "../utils/UserContext";
 import User from "./User";
 import UserClass from "./UserClass";
 import React from "react";
 // import { Component } from "react"; or destructure way of React
-
 class About extends React.Component {
 
   constructor(props) {
@@ -22,6 +22,12 @@ class About extends React.Component {
     return (
       <div>
         <h1>About</h1>
+        <div>
+          loggedIn User
+          <UserContext.Consumer>
+            {({ loggedInUser }) => <h3 className="font-bold">{loggedInUser}</h3>}
+          </UserContext.Consumer>
+        </div>
         <h2>This is Namaste React Web Series</h2>
         <User name={"Akshay Shaini (function)"} />
         <UserClass
