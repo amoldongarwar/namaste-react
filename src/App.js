@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, use, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body.js";
@@ -7,6 +7,7 @@ import Contact from "./components/Contact.js";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Error from "./components/Error.js";
 import RestaurentsMenu from "./components/RestaurentsMenu.js";
+import UserContext from "./utils/UserContext.js";
 // import Grocery from "./components/Grocery.js"; instead of static we use dynamic/lazy oading
 
 // Chunking
@@ -19,13 +20,26 @@ const Grocery = lazy(() => import("./components/Grocery.js")); //Lazy loading on
 
 const About = lazy(() => import("./components/About.js")); //Lazy loading on demand loading
 
-
 const AppLayout = () => {
+  const [userName, setUserName] = useState();
+
+  // Authentication logic can be added here
+  useEffect(() => {
+    // Make an API call and send username and password
+    const data = {
+      name: "Elon Musk", // static data but it can be dynamic from api
+    };
+    setUserName(data.name);
+  }, []);
+
   return (
-    <div className="app">
-      <Header />
-      <Outlet />
-    </div>
+    // provide and pass the userName to entire app using context provider
+    <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+      <div className="app">
+        <Header />
+        <Outlet />
+      </div>
+    </UserContext.Provider>
   );
 };
 
