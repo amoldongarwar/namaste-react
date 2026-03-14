@@ -1,36 +1,50 @@
+// Need optimise RestaurentCategory.js with ItemList ref: Namaste React
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
+
 export default function ItemList({ items }) {
-  console.log("items", items);
+  const dispatch = useDispatch();
+
+  const handleAddItem = (item) => {
+    dispatch(addItem(item));
+  };
 
   return (
     <div>
-      {items?.map((item) => (
-        <div
-          key={item.card.info.id}
-          className="p-2 m-2 border border-white-400 border-b-2 text-left flex justify-between"
-        >
-          <div className="w-9/12">
-            <div className="py-2">
-              <span>{item.card.info.name}</span>
-              <span>
-                {" "}
-                - ₹
-                {item.card.info.price
-                  ? item.card.info.price / 100
-                  : item.card.info.defaultPrice / 100}
-              </span>
-            </div>
-            <p>
-              <span className="text-xs"> {item.card.info.description}</span>
-            </p>
-          </div>
+      {items?.map((item) => {
+        const info = item.card?.info || item; // works for menu & cart items
 
-          <div className="w-3/12 p-4">
-            <div className="absolute">
-              <button className="p-1 mx-auto rounded-lg bg-white shadow-lg m-auto">
+        return (
+          <div
+            key={info.id}
+            className="p-2 m-2 border-b-2 text-left flex justify-between"
+          >
+            {/* Left Side */}
+            <div className="w-9/12">
+              <div className="py-2 font-semibold">
+                <span>{info.name}</span>
+                <span>
+                  {" "}
+                  - ₹{(info.price ? info.price : info.defaultPrice) / 100}
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-600">
+                {info.description}
+              </p>
+            </div>
+
+            {/* Right Side */}
+            <div className="w-3/12 p-4 relative">
+              <button
+                className="absolute bottom-2 left-6 bg-white shadow-lg px-2 py-1 rounded-lg text-green-600 font-bold"
+                onClick={() => handleAddItem(info)}
+              >
                 Add +
               </button>
-            </div>
-            <img
+
+              {info.imageId && (
+                <img
               className="rounded-lg"
               alt="restaurent-logo"
               src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/FOOD_CATALOG/IMAGES/CMS/2025/6/6/f6c81999-57b6-4eb7-ac66-dc1c3485f2e4_6ba607a5-1751-462a-a73d-68ae91ade469.jpg"
@@ -39,9 +53,11 @@ export default function ItemList({ items }) {
               //   resData.data.cloudinaryImageId
               // }
             ></img>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

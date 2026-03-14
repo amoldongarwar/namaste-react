@@ -8,6 +8,9 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Error from "./components/Error.js";
 import RestaurentsMenu from "./components/RestaurentsMenu.js";
 import UserContext from "./utils/UserContext.js";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore.js";
+import Cart from "./components/Cart.js";
 // import Grocery from "./components/Grocery.js"; instead of static we use dynamic/lazy oading
 
 // Chunking
@@ -33,13 +36,16 @@ const AppLayout = () => {
   }, []);
 
   return (
-    // provide and pass the userName to entire app using context provider
+    // Redux store provider
+    <Provider store={appStore}>
+    {/* provide and pass the userName to entire app using context provider */}
     <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
       <div className="app">
         <Header />
         <Outlet />
       </div>
     </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -76,6 +82,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurants/:resId",
         element: <RestaurentsMenu />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
     errorElement: <Error />,

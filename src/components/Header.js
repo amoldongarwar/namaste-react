@@ -1,8 +1,9 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, use } from "react";
 import { LOGO_URL } from "../utils/constant";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
+import { useSelector } from "react-redux";
 
 export default function Header() {
   console.log("Header render"); // check is it re-render when state update e.g login/logout button
@@ -24,6 +25,9 @@ export default function Header() {
 
   const { loggedInUser } = useContext(UserContext);
 
+  // Subscribing to the store using a selector
+  const cartItems = useSelector((store)=> store.cart.items);
+
   return (
     <div className="flex justify-between bg-yellow-400 shadow-lg sm:bg-slate-400 lg:bg-pink-100">
       <div className="logo-container">
@@ -42,10 +46,10 @@ export default function Header() {
             <Link to="/contact">Contact Us</Link>
           </li>
           <li className="px-4">
-            <Link to="/Grocery">Grocery</Link>
+            <Link to="/grocery">Grocery</Link>
           </li>
           <li className="px-4">
-            <Link to="/cart">Cart</Link>
+            <Link to="/cart">Cart ({cartItems.length} items)</Link>
           </li>
           {/* <button className="login" onClick={handleButton}>
             {btnName}
